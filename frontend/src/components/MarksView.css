@@ -1,0 +1,192 @@
+.marks-view h2 {
+  margin-top: 0;
+  color: #00ff88;
+  margin-bottom: 28px;
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-transform: uppercase;
+  text-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
+  font-family: 'Orbitron', sans-serif;
+}
+
+.subject-card {
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.7) 0%, rgba(0, 212, 255, 0.05) 100%);
+  border-radius: 16px;
+  padding: 28px;
+  margin-bottom: 24px;
+  border: 1px solid rgba(0, 255, 136, 0.2);
+  box-shadow: 0 0 25px rgba(0, 255, 136, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.subject-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(135deg, #00ff88 0%, #00d4ff 100%);
+  transition: width 0.3s ease;
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+}
+
+.subject-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 35px rgba(0, 255, 136, 0.2);
+  border-color: rgba(0, 255, 136, 0.4);
+}
+
+.subject-card:hover::before {
+  width: 6px;
+  box-shadow: 0 0 25px rgba(0, 255, 136, 0.5);
+}
+
+.subject-header {
+  margin-bottom: 20px;
+}
+
+.subject-header h3 {
+  margin: 0 0 8px 0;
+  color: #00ff88;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  text-shadow: 0 0 10px rgba(0, 255, 136, 0.2);
+}
+
+.subject-header p {
+  margin: 0;
+  color: #b0b9c3;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.table-container {
+  overflow-x: auto;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.1);
+  border: 1px solid rgba(0, 255, 136, 0.15);
+}
+
+.marks-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: rgba(15, 23, 42, 0.5);
+  border-radius: 12px;
+  overflow: hidden;
+  font-size: 13px;
+  border: 1px solid rgba(0, 255, 136, 0.15);
+}
+
+.marks-table th {
+  background: linear-gradient(135deg, #00ff88 0%, #00d4ff 100%);
+  color: #0a0e27;
+  padding: 14px 16px;
+  text-align: left;
+  font-weight: 800;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 0 15px rgba(0, 255, 136, 0.2);
+}
+
+.marks-table th:first-child {
+  border-top-left-radius: 12px;
+}
+
+.marks-table th:last-child {
+  border-top-right-radius: 12px;
+}
+
+.marks-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(0, 255, 136, 0.1);
+  font-weight: 500;
+  color: #e0e0e0;
+  transition: all 0.2s ease;
+}
+
+.marks-table tr:last-child td {
+  border-bottom: none;
+}
+
+.marks-table tr:last-child td:first-child {
+  border-bottom-left-radius: 12px;
+}
+
+.marks-table tr:last-child td:last-child {
+  border-bottom-right-radius: 12px;
+}
+
+.marks-table tbody tr {
+  transition: all 0.2s ease;
+}
+
+.marks-table tbody tr:hover {
+  background: rgba(0, 255, 136, 0.1);
+  transform: scale(1.01);
+  box-shadow: 0 0 15px rgba(0, 255, 136, 0.15);
+}
+
+.pending-badge {
+  display: inline-block;
+  padding: 6px 14px;
+  background: linear-gradient(135deg, rgba(255, 165, 0, 0.3) 0%, rgba(255, 200, 50, 0.2) 100%);
+  color: #ffa500;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  border: 1px solid rgba(255, 165, 0, 0.5);
+  box-shadow: 0 0 10px rgba(255, 165, 0, 0.2);
+  text-transform: uppercase;
+  text-shadow: 0 0 8px rgba(255, 165, 0, 0.3);
+}
+
+.no-data {
+  text-align: center;
+  padding: 80px 20px;
+  color: #708090;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.no-data::before {
+  content: '📝';
+  display: block;
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+@media (max-width: 768px) {
+  .marks-view h2 {
+    font-size: 20px;
+  }
+
+  .subject-card {
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+
+  .subject-header h3 {
+    font-size: 18px;
+  }
+
+  .marks-table {
+    font-size: 11px;
+  }
+
+  .marks-table th,
+  .marks-table td {
+    padding: 10px 12px;
+  }
+}
