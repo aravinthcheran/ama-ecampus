@@ -14,6 +14,80 @@ function GeminiChat() {
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
 
+  // Function to format message text with proper styling
+  const formatMessage = (text) => {
+    if (!text) return text;
+
+    // Split by lines
+    const lines = text.split('\n');
+    const formattedLines = [];
+
+    for (let i = 0; i < lines.length; i++) {
+      let line = lines[i];
+      
+      // Skip empty lines but add spacing
+      if (line.trim() === '') {
+        formattedLines.push(<br key={`br-${i}`} />);
+        continue;
+      }
+
+      // Handle bullet points (*, -, •)
+      if (line.trim().match(/^[\*\-•]\s+/)) {
+        const content = line.replace(/^[\*\-•]\s+/, '');
+        formattedLines.push(
+          <div key={i} className="message-list-item">
+            <span className="bullet">•</span>
+            <span dangerouslySetInnerHTML={{ __html: formatInlineStyles(content) }} />
+          </div>
+        );
+      }
+      // Handle numbered lists
+      else if (line.trim().match(/^\d+\.\s+/)) {
+        const match = line.match(/^(\d+)\.\s+(.+)/);
+        if (match) {
+          formattedLines.push(
+            <div key={i} className="message-list-item">
+              <span className="number">{match[1]}.</span>
+              <span dangerouslySetInnerHTML={{ __html: formatInlineStyles(match[2]) }} />
+            </div>
+          );
+        }
+      }
+      // Handle headers (lines that end with :)
+      else if (line.trim().endsWith(':') && line.length < 100) {
+        formattedLines.push(
+          <div key={i} className="message-header">
+            {line}
+          </div>
+        );
+      }
+      // Regular text
+      else {
+        formattedLines.push(
+          <div key={i} className="message-text" dangerouslySetInnerHTML={{ __html: formatInlineStyles(line) }} />
+        );
+      }
+    }
+
+    return <div className="formatted-message">{formattedLines}</div>;
+  };
+
+  // Function to format inline styles (bold, code, etc.)
+  const formatInlineStyles = (text) => {
+    // Bold text **text** or __text__
+    text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    text = text.replace(/__(.+?)__/g, '<strong>$1</strong>');
+    
+    // Italic text *text* or _text_
+    text = text.replace(/\*(.+?)\*/g, '<em>$1</em>');
+    text = text.replace(/_(.+?)_/g, '<em>$1</em>');
+    
+    // Code `text`
+    text = text.replace(/`(.+?)`/g, '<code>$1</code>');
+    
+    return text;
+  };
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -332,7 +406,7 @@ function GeminiChat() {
                       <span></span>
                     </div>
                   ) : (
-                    <pre>{msg.text}</pre>
+                    formatMessage(msg.text)
                   )}
                 </div>
               </div>
