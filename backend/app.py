@@ -11,7 +11,15 @@ import json
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app)
+
+# Configure CORS with explicit settings
+cors_config = {
+    "origins": ["http://localhost:3000", "http://localhost:5000", "https://ama-ecampus-181d.vercel.app"],
+    "methods": ["GET", "POST", "OPTIONS"],
+    "allow_headers": ["Content-Type", "Authorization"],
+    "supports_credentials": False,
+}
+CORS(app, resources={r"/api/*": cors_config})
 
 # Configure Gemini API with new genai module
 GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')

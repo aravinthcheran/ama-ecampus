@@ -1,9 +1,9 @@
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://ama-ecampus-181d.vercel.app';
 
 export const api = {
   // Login
   login: async (rollNo, password) => {
-    const response = await fetch(`${API_BASE_URL}/login`, {
+    const response = await fetch(`${API_BASE_URL}/api/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -15,7 +15,7 @@ export const api = {
 
   // Get attendance
   getAttendance: async (rollNo) => {
-    const response = await fetch(`${API_BASE_URL}/attendance`, {
+    const response = await fetch(`${API_BASE_URL}/api/attendance`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -27,7 +27,7 @@ export const api = {
 
   // Get marks
   getMarks: async (rollNo) => {
-    const response = await fetch(`${API_BASE_URL}/marks`, {
+    const response = await fetch(`${API_BASE_URL}/api/marks`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -39,7 +39,7 @@ export const api = {
 
   // Chat with AI
   chat: async (rollNo, message) => {
-    const response = await fetch(`${API_BASE_URL}/chat`, {
+    const response = await fetch(`${API_BASE_URL}/api/chat`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -51,7 +51,7 @@ export const api = {
 
   // Logout
   logout: async (rollNo) => {
-    const response = await fetch(`${API_BASE_URL}/logout`, {
+    const response = await fetch(`${API_BASE_URL}/api/logout`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
