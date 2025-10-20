@@ -24,9 +24,10 @@ CORS(app, resources={r"/api/*": cors_config})
 # Configure Gemini API with new genai module
 GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
 if GEMINI_API_KEY:
-    genai.configure(api_key=GEMINI_API_KEY)
+    gemini_client = genai.Client(api_key=GEMINI_API_KEY)
     print("✓ Gemini API configured successfully")
 else:
+    gemini_client = None
     print("Warning: GEMINI_API_KEY not found in environment variables")
 
 # In-memory storage for active sessions and their data
@@ -135,7 +136,7 @@ def api_chat():
         if not rollno or not message:
             return jsonify({"error": "Roll number and message are required"}), 400
         
-        if not GEMINI_API_KEY:
+        if not gemini_client:
             return jsonify({"error": "Gemini API is not configured"}), 500
         
         # Check if user session exists
@@ -167,9 +168,11 @@ Student's Question: {message}
 Please provide a helpful, concise answer based on the data above. If the student asks about attendance percentages, bunk count, marks, or performance, use the data provided. Be friendly and supportive.
 """
         
-        # Generate response using new Gemini API
-        model = genai.GenerativeModel('gemini-2.0-flash-exp')
-        response = model.generate_content(prompt)
+        # Generate response using google-genai library (v0.2.2)
+        response = gemini_client.models.generate_content(
+            model='gemini-2.0-flash-exp',
+            contents=prompt
+        )
         
         return jsonify({
             "success": True,
