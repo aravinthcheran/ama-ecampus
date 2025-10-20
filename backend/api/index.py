@@ -11,15 +11,22 @@ import json
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app)
+
+# Configure CORS with explicit settings
+cors_config = {
+    "origins": ["http://localhost:3000", "http://localhost:5000", "https://ama-ecampus-181d.vercel.app"],
+    "methods": ["GET", "POST", "OPTIONS"],
+    "allow_headers": ["Content-Type", "Authorization"],
+    "supports_credentials": False,
+}
+CORS(app, resources={r"/api/*": cors_config})
 
 # Configure Gemini API with new genai module
 GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
 if GEMINI_API_KEY:
-    gemini_client = genai.Client(api_key=GEMINI_API_KEY)
+    genai.configure(api_key=GEMINI_API_KEY)
     print("✓ Gemini API configured successfully")
 else:
-    gemini_client = 'AIzaSyC4oPZFMEw18uUSUbXK_ZmWz4CMAbPMZ5Y'
     print("Warning: GEMINI_API_KEY not found in environment variables")
 
 # In-memory storage for active sessions and their data
@@ -128,7 +135,7 @@ def api_chat():
         if not rollno or not message:
             return jsonify({"error": "Roll number and message are required"}), 400
         
-        if not gemini_client:
+        if not GEMINI_API_KEY:
             return jsonify({"error": "Gemini API is not configured"}), 500
         
         # Check if user session exists
@@ -161,10 +168,8 @@ Please provide a helpful, concise answer based on the data above. If the student
 """
         
         # Generate response using new Gemini API
-        response = gemini_client.models.generate_content(
-            model='gemini-2.0-flash-exp',
-            contents=prompt
-        )
+        model = genai.GenerativeModel('gemini-2.0-flash-exp')
+        response = model.generate_content(prompt)
         
         return jsonify({
             "success": True,
