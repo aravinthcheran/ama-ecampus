@@ -5,3 +5,5 @@ beautifulsoup4==4.12.2
 google-genai==0.2.2
 urllib3==2.1.0
 python-dotenv==1.0.0
+pymongo==4.6.0
+certifi==2024.2.2
