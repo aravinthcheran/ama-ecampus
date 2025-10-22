@@ -3,12 +3,18 @@
 .gemini-container {
   width: 100%;
   height: 100vh;
+  height: 100dvh;
   background: #1a1d2e;
   color: #e5e7eb;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  touch-action: pan-y;
 }
 
 .gemini-container::before {
@@ -279,11 +285,14 @@
   position: relative;
   max-width: 100%;
   margin: 0 auto;
+  min-height: 0;
+  touch-action: pan-y;
 }
 
 .messages-area {
   flex: 1;
   overflow-y: auto;
+  overflow-x: hidden;
   padding: 24px;
   scroll-behavior: smooth;
   max-width: 900px;
@@ -292,6 +301,10 @@
   background: #1a1d2e;
   position: relative;
   z-index: 2;
+  min-height: 0;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
 }
 
 .messages-area::-webkit-scrollbar {
@@ -579,11 +592,15 @@
   display: flex;
   gap: 8px;
   overflow-x: auto;
+  overflow-y: hidden;
   max-width: 900px;
   margin: 0 auto;
   width: 100%;
   background: #252a3d;
   border-top: 1px solid #374151;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  touch-action: pan-x;
 }
 
 .suggestions::-webkit-scrollbar {
@@ -632,6 +649,8 @@
   border-top: 1px solid #374151;
   position: relative;
   z-index: 2;
+  flex-shrink: 0;
+  touch-action: pan-y;
 }
 
 .input-wrapper {
@@ -668,6 +687,9 @@
   padding: 8px 0;
   font-weight: 500;
   box-shadow: none;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
 }
 
 .chat-input:focus {
@@ -753,15 +775,21 @@
     flex-direction: column;
     overflow: hidden;
     height: calc(100vh - 48px);
+    height: calc(100dvh - 48px);
+    min-height: 0;
+    touch-action: pan-y;
   }
 
   .messages-area {
     flex: 1;
     overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
     overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
     padding: 12px 8px;
     min-height: 0;
+    overscroll-behavior: contain;
+    touch-action: pan-y;
+    position: relative;
   }
 
   .message {
@@ -793,8 +821,11 @@
     padding: 10px 8px;
     gap: 6px;
     overflow-x: auto;
+    overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
     border-top: 1px solid #374151;
+    touch-action: pan-x;
   }
 
   .suggestion-chip {
@@ -806,7 +837,9 @@
   .input-area {
     flex-shrink: 0;
     padding: 10px 12px 20px;
+    padding-bottom: max(20px, env(safe-area-inset-bottom));
     gap: 10px;
+    touch-action: pan-y;
   }
 
   .input-wrapper {
@@ -821,7 +854,9 @@
     font-size: 13px;
     padding: 6px 0;
     max-height: 100px;
+    overflow-y: auto;
     -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
   }
 
   .send-button {
@@ -881,10 +916,18 @@
 
   .chat-container {
     height: calc(100vh - 44px);
+    height: calc(100dvh - 44px);
+    min-height: 0;
+    touch-action: pan-y;
   }
 
   .messages-area {
     padding: 10px 6px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    touch-action: pan-y;
   }
 
   .message {
@@ -913,6 +956,11 @@
   .suggestions {
     padding: 8px 6px;
     gap: 4px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    touch-action: pan-x;
   }
 
   .suggestion-chip {
@@ -922,7 +970,9 @@
 
   .input-area {
     padding: 8px 10px 16px;
+    padding-bottom: max(16px, env(safe-area-inset-bottom));
     gap: 8px;
+    touch-action: pan-y;
   }
 
   .input-wrapper {
@@ -935,6 +985,9 @@
     font-size: 12px;
     padding: 5px 0;
     max-height: 80px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
   }
 
   .send-button {
