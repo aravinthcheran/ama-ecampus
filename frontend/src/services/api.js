@@ -1,4 +1,4 @@
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://ama-ecampus-181d.vercel.app';
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://ama-ecampus-181d.vercel.app';
 
 export const api = {
   // Login
